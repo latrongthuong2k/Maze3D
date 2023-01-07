@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class ObjectsManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class ObjectsManager : MonoBehaviour
     [SerializeField] private Vector3 rotation;
     private void Start()
     {
+        Directional_Light.SetActive(false);
         instance = this;
     }
 

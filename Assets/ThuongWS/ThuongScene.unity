@@ -6926,6 +6926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 5.63
+  howcloseReset: 5.63
   AngryLevel: 0.15
 --- !u!195 &510439677
 NavMeshAgent:
@@ -8835,7 +8836,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &637122076
 Light:
   m_ObjectHideFlags: 0
@@ -9512,6 +9513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 4.52
+  howcloseReset: 4.52
   AngryLevel: 0.3
 --- !u!54 &661753866
 Rigidbody:
@@ -13509,6 +13511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 4.5
+  howcloseReset: 4.5
   AngryLevel: 0.4
 --- !u!54 &885952599
 Rigidbody:
@@ -15771,6 +15774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 4.31
+  howcloseReset: 4.31
   AngryLevel: 0.3
 --- !u!54 &1014102078
 Rigidbody:
@@ -16399,6 +16403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 75
+  howcloseReset: 1
   AngryLevel: 1
 --- !u!54 &1046536175
 Rigidbody:
@@ -17591,6 +17596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 5.63
+  howcloseReset: 5.63
   AngryLevel: 0.15
 --- !u!54 &1092369186
 Rigidbody:
@@ -21957,6 +21963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 5.63
+  howcloseReset: 5.63
   AngryLevel: 0.15
 --- !u!54 &1339974965
 Rigidbody:
@@ -26940,6 +26947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 4.52
+  howcloseReset: 4.52
   AngryLevel: 0.3
 --- !u!54 &1637290366
 Rigidbody:
@@ -34470,6 +34478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howclose: 5.64
+  howcloseReset: 5.64
   AngryLevel: 0.15
 --- !u!54 &2004438173
 Rigidbody:

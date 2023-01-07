@@ -9,6 +9,7 @@ public class enemy : MonoBehaviour
     private Transform player;
     private float Distance;
     public float howclose;
+    public float howcloseReset;
     public float AngryLevel;
     //// Start is called before the first frame update
     //void Start()
@@ -46,16 +47,14 @@ public class enemy : MonoBehaviour
         }
         else
         {
-            this.transform.position = offsetPos.position;
-            howclose = howclose - Time.deltaTime * AngryLevel;
-            if (howclose <= 6)
-                howclose = 6;
+            transform.position = offsetPos.position;
+            howclose = howcloseReset;
         }
             
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, howclose);
+        Gizmos.DrawWireSphere(transform.position, howclose);
     }
 }
