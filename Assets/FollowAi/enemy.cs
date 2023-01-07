@@ -44,11 +44,13 @@ public class enemy : MonoBehaviour
         {
             howclose = howclose + Time.deltaTime * AngryLevel;
             navMeshAgent.destination = player.position;
+            gameObject.GetComponent<Animator>().Play("EnemyAngry");
         }
         else
         {
             transform.position = offsetPos.position;
             howclose = howcloseReset;
+            gameObject.GetComponent<Animator>().Play("EnemyCold");
         }
             
     }
