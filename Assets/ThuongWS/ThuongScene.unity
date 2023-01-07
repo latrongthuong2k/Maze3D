@@ -9829,8 +9829,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549b8c2c13cbb974d90f14ec1175e0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howclose: 4.52
-  howcloseReset: 4.52
+  howclose: 6
+  howcloseReset: 6
   AngryLevel: 0.3
 --- !u!54 &661753866
 Rigidbody:
@@ -18077,9 +18077,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549b8c2c13cbb974d90f14ec1175e0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howclose: 5.63
-  howcloseReset: 5.63
-  AngryLevel: 0.15
+  howclose: 7
+  howcloseReset: 7
+  AngryLevel: 0.2
 --- !u!54 &1092369186
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28215,8 +28215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549b8c2c13cbb974d90f14ec1175e0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howclose: 4.52
-  howcloseReset: 4.52
+  howclose: 6
+  howcloseReset: 6
   AngryLevel: 0.3
 --- !u!54 &1637290366
 Rigidbody:
@@ -35809,8 +35809,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549b8c2c13cbb974d90f14ec1175e0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howclose: 5.64
-  howcloseReset: 5.64
+  howclose: 6
+  howcloseReset: 6
   AngryLevel: 0.15
 --- !u!54 &2004438173
 Rigidbody:

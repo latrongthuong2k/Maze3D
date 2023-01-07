@@ -72,11 +72,17 @@ public class enemy : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             StartCoroutine(nameof(DoDamage));
         }
-
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            StopCoroutine(nameof(DoDamage));
+        }
     }
     IEnumerator DoDamage()
     {
