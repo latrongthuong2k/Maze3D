@@ -12,6 +12,7 @@ TagManager:
   - MonsterVsLightGroup
   - MonsterVsLightGroup5
   - AllLightControl
+  - WinOffset
   layers:
   - Default
   - TransparentFX

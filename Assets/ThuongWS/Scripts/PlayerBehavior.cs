@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    private static PlayerBehavior instance;
+    public static PlayerBehavior Instance => instance;
+
+    [SerializeField] public int PlayerHP;
+    //
     [SerializeField] private bool SwitchAllow;
     [SerializeField] private bool LightControlAllow;
     [SerializeField] private float waitTimeAnimateDoors;
@@ -25,6 +30,8 @@ public class PlayerBehavior : MonoBehaviour
 
     void Start()
     {
+        instance = this;
+        PlayerHP = 100;
         AllowSaveSub = true;
         AllLightControl = false;
     }
@@ -77,6 +84,11 @@ public class PlayerBehavior : MonoBehaviour
             {
                 AllLightControl = true;
             }
+            else if (other.gameObject.tag == "WinOffset")
+            {
+                UIcontrol.Instance.GameWinUI.SetActive(true);
+            }
+            
         }
     }
     private void OnTriggerExit(Collider other)

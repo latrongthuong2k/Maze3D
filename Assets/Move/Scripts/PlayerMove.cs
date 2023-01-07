@@ -5,9 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
 
-    [SerializeField]
-    private float speed;
-
+    [SerializeField] private float speed;
     private float input_x;
     private float input_z;
 
@@ -15,7 +13,6 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame

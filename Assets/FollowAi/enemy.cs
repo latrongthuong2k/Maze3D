@@ -11,6 +11,7 @@ public class enemy : MonoBehaviour
     public float howclose;
     public float howcloseReset;
     public float AngryLevel;
+    private bool AngryAnimateIsDone;
     //// Start is called before the first frame update
     //void Start()
     //{
@@ -35,6 +36,7 @@ public class enemy : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         offsetPos = transform.parent;
+        AngryAnimateIsDone = false;
     }
     private void Update()
     {
@@ -44,13 +46,22 @@ public class enemy : MonoBehaviour
         {
             howclose = howclose + Time.deltaTime * AngryLevel;
             navMeshAgent.destination = player.position;
-            gameObject.GetComponent<Animator>().Play("EnemyAngry");
+            if(AngryAnimateIsDone == false)
+            {
+                gameObject.GetComponent<Animator>().Play("EnemyAngry");
+                AngryAnimateIsDone = true;
+            }
         }
         else
         {
             transform.position = offsetPos.position;
             howclose = howcloseReset;
-            gameObject.GetComponent<Animator>().Play("EnemyCold");
+            if (AngryAnimateIsDone == true)
+            {
+                gameObject.GetComponent<Animator>().Play("EnemyCold");
+                AngryAnimateIsDone = false;
+            }
+               
         }
             
     }
@@ -58,5 +69,21 @@ public class enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, howclose);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            StartCoroutine(nameof(DoDamage));
+        }
+
+    }
+    IEnumerator DoDamage()
+    {
+        while (PlayerBehavior.Instance.PlayerHP > 0 && UIcontrol.Instance.GameWinUI.activeSelf == false)
+        {
+            PlayerBehavior.Instance.PlayerHP = PlayerBehavior.Instance.PlayerHP - 20;
+            yield return new WaitForSeconds(1f);
+        }
     }
 }
