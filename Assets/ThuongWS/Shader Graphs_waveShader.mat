@@ -39,10 +39,10 @@ Material:
     - _BaseColor: 0
     - _Metallic: 1
     - _Noise_Scale: 46.78
-    - _Transition: -0.43
+    - _Transition: -0.38
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
-    - _BaseColor_1: {r: 1, g: 1, b: 1, a: 0}
+    - _BaseColor_1: {r: 0.20784314, g: 0.20784314, b: 0.20784314, a: 0}
     - _Color: {r: 0, g: 17.413303, b: 105.19516, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3568797692761341573

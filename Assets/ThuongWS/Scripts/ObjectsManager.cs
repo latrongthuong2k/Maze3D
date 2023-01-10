@@ -21,6 +21,16 @@ public class ObjectsManager : MonoBehaviour
     [SerializeField] public List<GameObject> AllDoor;
     [SerializeField] private Transform SpecialCapsule;
     [SerializeField] private Vector3 rotation;
+    private Dictionary<GroupName, List<GameObject>> BigGroup;
+    enum GroupName
+    {
+        Group1,
+        Group2,
+        Group3,
+        Group4,
+        Group5,
+        Group6,
+    }
     private void Start()
     {
         Directional_Light.SetActive(false);

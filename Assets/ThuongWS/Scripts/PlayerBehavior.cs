@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
+using System.Threading.Tasks;
+using static UnityEditor.Progress;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -19,12 +22,16 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private List<string> NameTagAction = new List<string>();
     [SerializeField] private List<GameObject> GroupCase;
 
-    // secondary storage : こういうのはこのグループが change after 15 seconds, light resolve.
-    [SerializeField] private bool AllowSaveSub;
-    [SerializeField] private float waitTimeSaveSub;
-    [SerializeField] private List<GameObject> SubGroupCase;
+    // secondary storage : こういうのはこのグループが change after 15 seconds, light resolve
     [SerializeField] private GameObject MonsterObjParent;
     [SerializeField] private GameObject BIGMonster;
+    enum ShortKey
+    {
+        Door,
+        OpenDoors,
+        CloseDoors
+    }
+    
     // All Light Control
     private bool AllLightControl;
 
@@ -32,33 +39,30 @@ public class PlayerBehavior : MonoBehaviour
     {
         instance = this;
         PlayerHP = 100;
-        AllowSaveSub = true;
         AllLightControl = false;
+        //
+       
     }
-    void Update()
+    async void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            //light control させる時
-            if (SwitchAllow == true && LightControlAllow == true)
+            if(SwitchAllow == true )
             {
-                LightDown();
+                await LightDown(GroupCase);
             }
-            if (AllLightControl == true)
-                TurnOnAllLight();
+            TurnOnAllLight(); // if true
         }
     }
-
     //--------------------------------------------
     // いつもSwitchのところに入るとSwitchを押せる。
     private void OnTriggerEnter(Collider other)
-    {
+    { 
         foreach (var item in NameTagAction)
         {
             if (item == other.gameObject.tag && other.name != "Door")
             {
                 SwitchAllow = true;
-                LightControlAllow = true;
                 switch (other.gameObject.tag)
                 {
                     case "MonsterVsLightGroup":
@@ -80,7 +84,8 @@ public class PlayerBehavior : MonoBehaviour
                         GroupCase = ObjectsManager.Instance.Group6;
                         break;
                 }
-            }else if(other.gameObject.tag == "AllLightControl")
+            }
+            else if (other.gameObject.tag == "AllLightControl")
             {
                 AllLightControl = true;
             }
@@ -88,7 +93,6 @@ public class PlayerBehavior : MonoBehaviour
             {
                 UIcontrol.Instance.GameWinUI.SetActive(true);
             }
-            
         }
     }
     private void OnTriggerExit(Collider other)
@@ -98,124 +102,76 @@ public class PlayerBehavior : MonoBehaviour
             if (item == other.gameObject.tag && other.name != "Door")
             {
                 SwitchAllow = false;
+            }
+            else if (other.gameObject.tag == "AllLightControl")
                 LightControlAllow = false;
-            }
         }
     }
     //--------------------------------------------
-    private void DoDoorsAction()
+    private async Task LightDown(List<GameObject> GroupCase)
     {
-        foreach (var item in GroupCase)
-        {
-            if(item.name == "Door")
-            {
-                if (item.GetComponent<BoxCollider>().isTrigger == false)
-                {
-                    item.GetComponent<Animator>().Play("DoorAnimate");
-                    Invoke(nameof(OpenDoor), waitTimeAnimateDoors);
-                }else
-                {
-                    item.GetComponent<Animator>().Play("DoorAnimateClose");
-                    Invoke(nameof(CloseDoor), waitTimeAnimateDoors);
-                }
-            }
-        }
-        if (AllowSaveSub == true)
-        {
-            // add storage and lock
-            SubGroupCase = GroupCase;
-            AllowSaveSub = false;
-            // Save storage affter 15s
-            Invoke(nameof(SaveSubGroupCase), waitTimeSaveSub);
-        }
-    }
-    private void DoSubDoorsAction()
-    {
-        foreach (var item in SubGroupCase)
-        {
-            if (item.name == "Door")
-            {
-                if (item.GetComponent<BoxCollider>().isTrigger == false)
-                {
-                    item.GetComponent<Animator>().Play("DoorAnimate");
-                    Invoke(nameof(OpenDoor), waitTimeAnimateDoors);
-                }
-                else
-                {
-                    item.GetComponent<Animator>().Play("DoorAnimateClose");
-                    Invoke(nameof(CloseDoor), waitTimeAnimateDoors);
-                }
-            }
-        }
-    }
-    //--------------------------------------------
-    private void LightDown()
-    {
-        foreach (var item in GroupCase)
+        foreach(var item in GroupCase)
         {
             if (item.name == "Light" && item.activeSelf == false)
             {
                 item.SetActive(true);
                 item.GetComponent<Animator>().Play("LightDownAnimate");
-                DoInvoke();
+                await DoSomthingToDoor(GroupCase, ShortKey.OpenDoors);
+                await LightUp(GroupCase);
+                await DoSomthingToDoor(GroupCase, ShortKey.CloseDoors);
             }
         }
     }
-    private void DoInvoke()
+    private async Task LightUp(List<GameObject> GroupCase)
     {
-        Invoke(nameof(DoDoorsAction), waitTimeAnimateLightDown);
-        Invoke(nameof(LightUp), WaitTimeAnimateDoLightUp);
-    }
-    private void LightUp()
-    {
-        foreach (var item in SubGroupCase)
+        await Task.Delay(6000);
+        for (int i = 0; i < GroupCase.Count; i++)
         {
-            if(item.name == "Light")
+            if (GroupCase[i].name == "Light")
             {
-                item.GetComponent<Animator>().Play("LightUpAnimate");
-                Invoke(nameof(SetActiveLight), WaitTimeSetActiveLight);
-                DoSubDoorsAction();
+                GroupCase[i].GetComponent<Animator>().Play("LightUpAnimate");
+                await SetActiveLight(GroupCase);
             }
         }
     }
-   
-    private void SetActiveLight()
+    private async Task SetActiveLight(List<GameObject> GroupCase)
     {
-        foreach (var item in SubGroupCase)
+        await Task.Delay(1300);
+        for (int i = 0; i < GroupCase.Count; i++)
         {
-            if (item.name == "Light")
+            if (GroupCase[i].name == "Light")
             {
-                item.SetActive(false);
+                GroupCase[i].SetActive(false);
             }
         }
     }
     //--------------------------------------------
-    private void OpenDoor()
+    private async Task DoSomthingToDoor(List<GameObject> GroupCase , ShortKey Action)
     {
-        foreach (var item in GroupCase)
+        if (Action == ShortKey.OpenDoors)
         {
-            if(item.name == "Door")
+            await Task.Delay(1000);
+            foreach (var item in GroupCase)
             {
-                item.GetComponent<BoxCollider>().isTrigger = true;
+                if (item.name == "Door")
+                {
+                    item.GetComponent<Animator>().Play("DoorAnimate");
+                    item.GetComponent<BoxCollider>().isTrigger = true;
+                }
+            }
+        }else if(Action == ShortKey.CloseDoors)
+        {
+            await Task.Delay(0);
+            foreach (var item in GroupCase)
+            {
+                if (item.name == "Door")
+                {
+                    item.GetComponent<Animator>().Play("DoorAnimateClose");
+                    item.GetComponent<BoxCollider>().isTrigger = false;
+                }
             }
         }
-    }
-    private void CloseDoor()
-    {
-        foreach (var item in GroupCase)
-        {
-            if (item.name == "Door")
-            {
-                item.GetComponent<BoxCollider>().isTrigger = false;
-            }
-        }
-    }
-    //--------------------------------------------
-    private void SaveSubGroupCase()
-    {
-        AllowSaveSub = true;
-        SubGroupCase = GroupCase;
-        Debug.Log("Save New storage");
+        
     }
     //--------------------------------------------
     private void TurnOnAllLight()

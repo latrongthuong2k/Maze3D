@@ -9,6 +9,7 @@ public class enemy : MonoBehaviour
     private Transform player;
     private float Distance;
     public float howclose;
+    public float AttackRange;
     public float howcloseReset;
     public float AngryLevel;
     private bool AngryAnimateIsDone;
@@ -63,30 +64,34 @@ public class enemy : MonoBehaviour
             }
                
         }
-            
+        DoAttackInRange();
     }
     private void OnDrawGizmos()
     {
+        // Angry Range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, howclose);
+        // Attack Range
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, AttackRange);
+
     }
-    private void OnCollisionEnter(Collision collision)
+    private void DoAttackInRange()
     {
-        if (collision.gameObject.tag == "Player")
+        if (Distance <= AttackRange)
         {
             StartCoroutine(nameof(DoDamage));
         }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        else
         {
             StopCoroutine(nameof(DoDamage));
         }
+
     }
+
     IEnumerator DoDamage()
     {
-        while (PlayerBehavior.Instance.PlayerHP > 0 && UIcontrol.Instance.GameWinUI.activeSelf == false)
+        while (PlayerBehavior.Instance.PlayerHP > 0 && UIcontrol.Instance.GameWinUI.activeSelf == false) // Still Attack if player HP > 0;
         {
             PlayerBehavior.Instance.PlayerHP = PlayerBehavior.Instance.PlayerHP - 20;
             yield return new WaitForSeconds(1f);
