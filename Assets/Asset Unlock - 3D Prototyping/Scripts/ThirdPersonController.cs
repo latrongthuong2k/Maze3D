@@ -5,61 +5,68 @@ using UnityEngine;
 
 public class ThirdPersonController : MonoBehaviour
 {
-    public Camera GameCamera;
-    public float playerSpeed = 2.0f;
-    private float JumpForce = 1.0f;
-    
+    //public Camera GameCamera;
+    private static ThirdPersonController instance;
+    public static ThirdPersonController Instance => instance;
+
+    public float playerSpeed = 8.5f;
+    [SerializeField] private float JumpForce = 1.0f;
+
     private CharacterController m_Controller;
     private Animator m_Animator;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private float gravityValue = -9.81f;
+    private float input_x;
+    private float input_z;
 
     private void Start()
     {
+        instance = this;
         m_Controller = gameObject.GetComponent<CharacterController>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
+        InputLogic();
+        GravityCaculate();
+    }
+    private void LateUpdate()
+    {
+        MoveLogic();
+    }
+    void InputLogic()
+    {
+        input_x = Input.GetAxis("Horizontal");
+        input_z = Input.GetAxis("Vertical");
         groundedPlayer = m_Controller.isGrounded;
-        
+    }
+    private void MoveLogic()
+    {
+        //transform.Translate(moveDirection * playerSpeed * Time.deltaTime, Space.World);
+        Vector3 moveDirection = new Vector3(input_x, 0, input_z);
+        transform.LookAt(transform.position + moveDirection);
+        m_Controller.Move(moveDirection * Time.deltaTime * playerSpeed);
+        m_Animator.SetFloat("MovementX", input_x);
+        m_Animator.SetFloat("MovementZ", input_z);
+        m_Controller.Move(playerVelocity * Time.deltaTime);
+    }
+    private void CheckGroundLogic()
+    {
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = -0.5f;
         }
-
-        Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        //trasnform input into camera space
-        var forward = GameCamera.transform.forward;
-        forward.y = 0;
-        forward.Normalize();
-        var right = Vector3.Cross(Vector3.up, forward);
-        
-        Vector3 move = forward * input.z + right * input.x;
-        move.y = 0;
-        
-        m_Controller.Move(move * Time.deltaTime * playerSpeed);
-
-        m_Animator.SetFloat("MovementX", input.x);
-        m_Animator.SetFloat("MovementZ", input.z);
-
-        if (input != Vector3.zero)
-        {
-            gameObject.transform.forward = forward;
-        }
-
-        // Changes the height position of the player..
+        //Changes the height position of the player..
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(JumpForce * -3.0f * gravityValue);
             m_Animator.SetTrigger("Jump");
         }
-
+    }
+    private void GravityCaculate()
+    {
         playerVelocity.y += gravityValue * Time.deltaTime;
-
-        m_Controller.Move(playerVelocity * Time.deltaTime);
     }
 }

@@ -6,6 +6,7 @@ public class PlayerMove : MonoBehaviour
 {
 
     [SerializeField] private float speed;
+    [SerializeField] private Animator animator;
     private float input_x;
     private float input_z;
 
@@ -38,5 +39,14 @@ public class PlayerMove : MonoBehaviour
         transform.LookAt(transform.position + moveDirection);
         transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
 
+    }
+    //private void LateUpdate()
+    //{
+      
+    //}
+    private void FixedUpdate()
+    {
+        animator.SetFloat("MovementZ", input_z);
+        animator.SetFloat("MovementX", input_x);
     }
 }

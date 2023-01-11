@@ -12,18 +12,19 @@ public class PlayerBehavior : MonoBehaviour
     public static PlayerBehavior Instance => instance;
 
     [SerializeField] public int PlayerHP;
-    //
+    // Map Behavior
     [SerializeField] private bool SwitchAllow;
     [SerializeField] private float waitTimeAnimateDoors;
     [SerializeField] private float waitTimeAnimateLightDown;
     [SerializeField] private float WaitTimeAnimateDoLightUp;
     [SerializeField] private float WaitTimeSetActiveLight;
     [SerializeField] private List<string> NameTagAction = new List<string>();
+    // Object behavior
     [SerializeField] private List<GameObject> GroupCase;
-
-    // secondary storage : こういうのはこのグループが change after 15 seconds, light resolve
+    // Enemy behavior
     [SerializeField] private GameObject MonsterObjParent;
     [SerializeField] private GameObject BIGMonster;
+    //
     enum ShortKey
     {
         Door,
@@ -37,10 +38,11 @@ public class PlayerBehavior : MonoBehaviour
     void Start()
     {
         instance = this;
+        //
         PlayerHP = 100;
         AllLightControl = false;
         //
-       
+
     }
     async void Update()
     {
@@ -51,6 +53,7 @@ public class PlayerBehavior : MonoBehaviour
                 await LightDown(GroupCase);
             }
             TurnOnAllLight(); // if true
+            
         }
     }
     //--------------------------------------------
@@ -201,4 +204,36 @@ public class PlayerBehavior : MonoBehaviour
         MonsterObjParent.SetActive(false);
         BIGMonster.SetActive(true);
     }
+    //private async void HPview()
+    //{
+    //    m_Animator.SetInteger("PlayerHP", PlayerHP);
+    //    if (PlayerHP == 100 && m_Animator.GetBool("Green") == true)
+    //    {
+    //        await HPtask("Green");
+    //    }
+    //    if (PlayerHP >= 50 && PlayerHP <= 80 && m_Animator.GetBool("Yellow") == true)
+    //    {
+    //        await HPtask("Yellow");
+    //    }
+    //    if (PlayerHP >= 0 && PlayerHP <= 50 && m_Animator.GetBool("Red") == true)
+    //    {
+    //        await HPtask("Red");
+    //    }
+    //}
+    //private async Task HPtask(string name)
+    //{
+    //    await Task.Delay(400);
+    //    switch (name)
+    //    {
+    //        case "Green":
+    //            m_Animator.SetBool("Green", false);
+    //            break;
+    //        case "Yellow":
+    //            m_Animator.SetBool("Green", false);
+    //            break;
+    //        case "Red":
+    //            m_Animator.SetBool("Green", false);
+    //            break;
+    //    }
+    //}
 }

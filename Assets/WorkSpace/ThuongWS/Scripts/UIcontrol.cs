@@ -11,8 +11,8 @@ public class UIcontrol : MonoBehaviour
     public static UIcontrol Instance => instance;
     public Transform PlayerOffSet;
     public Transform Player;
-    [SerializeField] public GameObject GameOverUI;
-    [SerializeField] public GameObject GameWinUI;
+    public GameObject GameOverUI;
+    public GameObject GameWinUI;
     public GameObject MainMenu;
     public GameObject MiniMap;
 
@@ -21,7 +21,24 @@ public class UIcontrol : MonoBehaviour
         instance = this;
         MainMenu.SetActive(true);
         MiniMap.SetActive(false);
+        ThirdPersonController.Instance.playerSpeed = 0f;
     }
+    private void Update()
+    {
+        if (PlayerBehavior.Instance.PlayerHP <= 0)
+        {
+            GameOver();
+        }
+    }
+    //---------------------------------------------------------
+    private void GameOver()
+    {
+        // 
+        GameOverUI.SetActive(true);
+        MiniMap.SetActive(false);
+        ThirdPersonController.Instance.playerSpeed = 0f;
+    }
+    //---------------------------------------------------------
     public void LoadGame()
     {
         SceneManager.LoadScene("ThuongScene");
@@ -36,14 +53,11 @@ public class UIcontrol : MonoBehaviour
         SceneManager.LoadScene("ThuongScene");
         MainMenu.SetActive(true);
         MiniMap.SetActive(false);
-
     }
-    private void Update()
+    public void PlayGame()
     {
-        if(PlayerBehavior.Instance.PlayerHP <= 0)
-        {
-            GameOverUI.SetActive(true);
-            MiniMap.SetActive(false);
-        }
+        MiniMap.SetActive(true);
+        MainMenu.SetActive(false);
+        ThirdPersonController.Instance.playerSpeed = 8.5f;
     }
 }

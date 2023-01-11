@@ -8,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_waveShader 2
-  m_Shader: {fileID: -6465566751694194690, guid: 6a3b9855041d54d498664e8cb39a56f0, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 6a3b9855041d54d498664e8cb39a56f0,
+    type: 3}
   m_ValidKeywords:
   - _BUILTIN_ALPHATEST_ON
   - _BUILTIN_AlphaClip
