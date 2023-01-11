@@ -206,9 +206,9 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.56
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.2
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
@@ -240,8 +240,6 @@ MonoBehaviour:
   GroupCase: []
   MonsterObjParent: {fileID: 0}
   BIGMonster: {fileID: 0}
-  m_Animator: {fileID: 5952095501236107741}
-  Shader: {fileID: 2100000, guid: 192d8c6a000324cbf95ee2a712baff80, type: 2}
 --- !u!114 &7007049932922118088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1541,12 +1539,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 192d8c6a000324cbf95ee2a712baff80, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e789208cc0d30394583b7dff5534029e, type: 3}
---- !u!95 &5952095501236107741 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: e789208cc0d30394583b7dff5534029e,
-    type: 3}
-  m_PrefabInstance: {fileID: 5952095501245484221}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5952095501245879933 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400064, guid: e789208cc0d30394583b7dff5534029e,

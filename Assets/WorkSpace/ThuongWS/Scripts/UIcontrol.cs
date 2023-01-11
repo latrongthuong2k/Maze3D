@@ -41,6 +41,8 @@ public class UIcontrol : MonoBehaviour
     //---------------------------------------------------------
     public void LoadGame()
     {
+        SoundManager.Instance.StopAnySound("BGM");
+        SoundManager.Instance.StopAnySound("ScareSound");
         SceneManager.LoadScene("ThuongScene");
         MiniMap.SetActive(true);
     }
@@ -50,6 +52,8 @@ public class UIcontrol : MonoBehaviour
     }
     public void MainMenuUI()
     {
+        SoundManager.Instance.StopAnySound("BGM");
+        SoundManager.Instance.StopAnySound("ScareSound");
         SceneManager.LoadScene("ThuongScene");
         MainMenu.SetActive(true);
         MiniMap.SetActive(false);
