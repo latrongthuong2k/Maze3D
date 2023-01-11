@@ -4,8 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/ThuongWS/ThuongScene.unity
-    guid: de983d61944bd4dd1872f3073816c0be
+  m_Scenes: []
   m_configObjects: {}

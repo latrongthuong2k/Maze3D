@@ -3,16 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Kabe
-  - MonsterVSLightGroup2
-  - MonsterVsLightGroup1
-  - MonsterVsLightGroup3
-  - MonsterVsLightGroup4
-  - MonsterVsLightGroup
-  - MonsterVsLightGroup5
-  - AllLightControl
-  - WinOffset
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -20,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - PostPro
-  - Switch
+  - 
+  - 
   - 
   - 
   - 
