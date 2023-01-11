@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEditor.Rendering;
 using UnityEngine;
 using System.Threading.Tasks;
-using static UnityEditor.Progress;
 
 public class PlayerBehavior : MonoBehaviour
 {
