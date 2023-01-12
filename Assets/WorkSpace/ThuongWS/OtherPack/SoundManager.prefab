@@ -52,7 +52,7 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - soundName: ScareSound
-    volume: 1
+    volume: 0.602
     pitch: 1
     clip: {fileID: 8300000, guid: 6ca90db6c01834cb5ade40e13dcfbfee, type: 3}
     loop: 0

@@ -42,11 +42,12 @@ public class UIcontrol : MonoBehaviour
     public void LoadGame()
     {
         SoundManager.Instance.StopAnySound("BGM");
-        if(SoundManager.Instance.CheckIsPlaying("ScareSound") == true)
+        SceneManager.LoadScene("ThuongScene");
+        if (SoundManager.Instance.CheckIsPlaying("ScareSound") == true)
         {
             SoundManager.Instance.StopAnySound("ScareSound");
         }
-        SceneManager.LoadScene("ThuongScene");
+        
         MiniMap.SetActive(true);
     }
     public void QuitGame()
@@ -56,11 +57,12 @@ public class UIcontrol : MonoBehaviour
     public void MainMenuUI()
     {
         SoundManager.Instance.StopAnySound("BGM");
+        SceneManager.LoadScene("ThuongScene");
         if (SoundManager.Instance.CheckIsPlaying("ScareSound") == true)
         {
             SoundManager.Instance.StopAnySound("ScareSound");
         }
-        SceneManager.LoadScene("ThuongScene");
+        
         MainMenu.SetActive(true);
         MiniMap.SetActive(false);
     }

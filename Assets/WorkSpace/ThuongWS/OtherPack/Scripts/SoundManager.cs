@@ -69,7 +69,7 @@ public class SoundManager : MonoBehaviour
             Debug.LogWarning("Sound " + name + " can't play, pls in put SE name!");
             return;
         }
-        s.source.PlayOneShot(s.source.clip);
+        s.source.Play();
     }
     public void PlayBGM(string name)
     {

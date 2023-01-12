@@ -15,7 +15,7 @@ public class enemy : MonoBehaviour
     public float AngryLevel;
     private bool inAttackRange = false;
     private bool AngryAnimateIsDone;
-    private bool AngrySound = false;
+    private bool AngrySound;
     private bool WaitToStopSound = false;
     [SerializeField] private int EnemyDamage;
     [SerializeField ]private float TimeRepeatDamage;
@@ -45,34 +45,15 @@ public class enemy : MonoBehaviour
         offsetPos = transform.parent;
         AngryAnimateIsDone = false;
     }
+    private void Start()
+    {
+        AngrySound = false;
+    }
     private void Update()
     {
         Distance = Vector3.Distance(player.position, transform.position);
 
-        if (Distance <= howclose)
-        {
-            AngrySound = true;
-            howclose = howclose + Time.deltaTime * AngryLevel;
-            navMeshAgent.destination = player.position;
-            if (AngryAnimateIsDone == false)
-            {
-                gameObject.GetComponent<Animator>().Play("EnemyAngry");
-                AngryAnimateIsDone = true;
-            }
-        }
-        else
-        {
-            AngrySound = false;
-            transform.position = offsetPos.position;
-            howclose = howcloseReset;
-            if (AngryAnimateIsDone == true)
-            {
-                gameObject.GetComponent<Animator>().Play("EnemyCold");
-                AngryAnimateIsDone = false;
-            }
-               
-        }
-        SoundEF();
+        CheckDistance();
         DoAttackInRange();
 
     }
@@ -111,21 +92,57 @@ public class enemy : MonoBehaviour
     }
     private async void SoundEF()
     {
-        if (AngrySound == true && SoundManager.Instance.CheckIsPlaying("ScareSound") == false)
+        if ( SoundManager.Instance.CheckIsPlaying("ScareSound") == false)
         {
             SoundManager.Instance.PlayAnySoundSE("ScareSound");
             WaitToStopSound = true;
-            
+            return;
         }
-        if (AngrySound == false && SoundManager.Instance.CheckIsPlaying("ScareSound") == true && WaitToStopSound == true)
+        if (WaitToStopSound == true)
         {
             await WaitToStop();
+            WaitToStopSound = false;
+            return;
+
         }
     }
     private async Task WaitToStop()
     {
         await Task.Delay(500);
         SoundManager.Instance.StopAnySound("ScareSound");
-        WaitToStopSound = false;
+    }
+    private void CheckDistance()
+    {
+        if (Distance <= howclose)
+        {
+            if (AngrySound == false)
+            {
+                SoundEF();
+                AngrySound = true;
+            }
+            howclose = howclose + Time.deltaTime * AngryLevel;
+            navMeshAgent.destination = player.position;
+            if (AngryAnimateIsDone == false)
+            {
+                gameObject.GetComponent<Animator>().Play("EnemyAngry");
+                AngryAnimateIsDone = true;
+            }
+        }
+        else if (Distance >= howclose)
+        {
+            if (AngrySound == true)
+            {
+                SoundEF();
+                AngrySound = false;
+            }
+            transform.position = offsetPos.position;
+            howclose = howcloseReset;
+            if (AngryAnimateIsDone == true)
+            {
+                gameObject.GetComponent<Animator>().Play("EnemyCold");
+                AngryAnimateIsDone = false;
+            }
+
+        }
     }
 }
